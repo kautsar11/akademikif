@@ -70,7 +70,7 @@
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                   $stmt->close();
                 }
-
+                $conn->close();
                 foreach ($result as $row) :
                 ?>
                   <tr>
@@ -78,7 +78,7 @@
                     <td><?= $row['nama_guru'] ?></td>
                     <td class="text-center" style="width: 30%">
                       <a class="btn btn-success" href="">Ubah</a>
-                      <a class="btn btn-danger" href="">Hapus</a>
+                      <a class="btn btn-danger" href="controllers/guru/delete_guru.php?nip=<?= $row['nip'] ?>">Hapus</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>
@@ -112,7 +112,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="" name="formTambahGuru">
+        <form action=<?= htmlspecialchars("controllers/guru/insert_guru.php") ?> name="formTambahGuru" method="POST">
           <div class="mb-3">
             <label for="inputNip" class="form-label">NIP</label>
             <input type="number" class="form-control" name="guruNip" />
