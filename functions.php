@@ -12,3 +12,14 @@ function getRowDataGuru($nip)
 
     return $result;
 }
+
+function getRowDataSiswa($nisn)
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM siswa WHERE nisn = ?");
+    $stmt->bind_param("s", $nisn);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    return $result;
+}
