@@ -77,7 +77,7 @@
                     <td class="text-center"><?= $row['nip'] ?></td>
                     <td><?= $row['nama_guru'] ?></td>
                     <td class="text-center" style="width: 30%">
-                      <a class="btn btn-success" href="">Ubah</a>
+                      <a class="btn btn-success" href="update_guru.php?nip=<?= $row['nip'] ?>">Ubah</a>
                       <a class="btn btn-danger" href="controllers/guru/delete_guru.php?nip=<?= $row['nip'] ?>">Hapus</a>
                     </td>
                   </tr>

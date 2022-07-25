@@ -1,4 +1,11 @@
-<?php include_once 'views/nav.php'; ?>
+<?php
+include_once 'views/nav.php';
+require_once 'config/config.php';
+include_once 'functions.php';
+
+$nip = $_GET['nip'];
+$dataGuru = getRowDataGuru($nip);
+?>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -22,17 +29,17 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="" name="formUbahGuru">
+            <form action="<?= htmlspecialchars("controllers/guru/update_guru.php?nip=$nip") ?>" name="formUbahGuru" method="POST">
               <div class="mb-3">
                 <label for="inputNip" class="form-label">NIP</label>
-                <input type="number" class="form-control" name="guruNip" />
+                <input type="number" class="form-control" name="guruNip" value="<?= $dataGuru['nip'] ?>" />
               </div>
               <div class="mb-3">
                 <label for="inputNama" class="form-label">Nama</label>
-                <input type="text" class="form-control" name="guruNama" />
+                <input type="text" class="form-control" name="guruNama" value="<?= $dataGuru['nama_guru'] ?>" />
               </div>
               <div class="modal-footer">
-                <a class="btn btn-secondary" href="">Kembali</a>
+                <a class="btn btn-secondary" href="index.php">Kembali</a>
                 <input class="btn btn-success" name="submitFormUbahGuru" type="submit" value="Ubah" />
               </div>
             </form>
