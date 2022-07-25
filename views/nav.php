@@ -36,32 +36,32 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Guru</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="kelas.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Kelas</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="tahun_ajaran.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Tahun Ajaran</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="siswa.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Siswa</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="mata_pelajaran.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Mata Pelajaran</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="siswa.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Nilai Siswa</span></a>
             </li>
