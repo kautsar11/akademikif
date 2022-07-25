@@ -3,7 +3,7 @@
 define("HOST", 'localhost');
 define("USERNAME", 'root');
 define("PASS", '');
-define("DBNAME", 'akademi');
+define("DBNAME", 'akademik');
 
 function connect_to_database()
 {
