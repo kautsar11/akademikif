@@ -15,6 +15,6 @@ if (isset($_POST['submitFormUbahGuru'])) {
     if ($stmt->affected_rows > 0) {
         header("Location:../../index.php");
     } else {
-        throw new Exception("Tambah Data Guru Gagal");
+        throw new Exception("Ubah Data Guru Gagal");
     }
 }

@@ -1,4 +1,11 @@
-<?php include_once 'views/nav.php'; ?>
+<?php
+include_once 'views/nav.php';
+require_once 'config/config.php';
+include_once 'functions.php';
+
+$nisn = $_GET['nisn'];
+$dataSiswa = getRowDataSiswa($nisn);
+?>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -22,17 +29,28 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="" name="formUbahSiswa">
+            <form action="<?= htmlspecialchars("controllers/siswa/update_siswa.php?nisn=$nisn") ?>" name="formUbahSiswa" method="POST">
               <div class="mb-3">
-                <label for="inputNip" class="form-label">NIS</label>
-                <input type="number" class="form-control" name="siswaNis" />
+                <label for="inputNip" class="form-label">NISN</label>
+                <input type="number" class="form-control" name="siswaNisn" value="<?= $dataSiswa['nisn'] ?>" />
               </div>
               <div class="mb-3">
                 <label for="inputNama" class="form-label">Nama</label>
-                <input type="text" class="form-control" name="siswaNama" />
+                <input type="text" class="form-control" name="siswaNama" value="<?= $dataSiswa['nama_siswa'] ?>" />
+              </div>
+              <div class="mb-3">
+                <label for="inputKelas" class="form-label">Kelas</label>
+                <select name="siswaKelas" id="siswaKelas" class="form-select">
+                  <?php
+                  $rowsKelas = getRowsKelas();
+                  foreach ($rowsKelas as $kelas) :
+                  ?>
+                    <option value="<?= $kelas['kelas'] ?>" <?= ($kelas['kelas'] == $dataSiswa['nama_kelas']) ? "selected" : "" ?>><?= $kelas['kelas'] ?></option>
+                  <?php endforeach; ?>
+                </select>
               </div>
               <div class="modal-footer">
-                <a class="btn btn-secondary" href="">Kembali</a>
+                <a class="btn btn-secondary" href="siswa.php">Kembali</a>
                 <input class="btn btn-success" name="submitFormUbahSiswa" type="submit" value="Ubah" />
               </div>
             </form>
