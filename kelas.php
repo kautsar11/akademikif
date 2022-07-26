@@ -27,7 +27,9 @@
               <!-- tombol cari -->
               <div class="com-sm-12 col-md-6 mb-2">
                 <div id="dataTables_filter" class="dataTables_filter">
-                  <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="get">
+                    <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  </form>
                 </div>
               </div>
             </div>
@@ -40,13 +42,44 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="text-center">Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td class="text-center" style="width: 30%">
-                    <a class="btn btn-success" href="">Ubah</a>
-                  </td>
-                </tr>
+                <?php
+                require_once 'config/config.php';
+
+                $conn = connect_to_database();
+
+                if (isset($_GET['cari']) && $_GET['cari'] !== "") {
+                  $cari = $_GET["cari"];
+
+                  $stmt = $conn->prepare(
+                    "SELECT kelas.kelas, guru.nama_guru 
+                    FROM kelas,guru
+                    WHERE guru.nip = kelas.nip_wakel AND guru.nama_guru LIKE concat('%',?,'%')"
+                  );
+                  $stmt->bind_param("s", $cari);
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                } else {
+                  $stmt = $conn->prepare(
+                    "SELECT kelas.kelas, guru.nama_guru 
+                    FROM kelas,guru
+                    WHERE guru.nip = kelas.nip_wakel"
+                  );
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                }
+                $conn->close();
+                foreach ($result as $row) :
+                ?>
+                  <tr>
+                    <td class="text-center"><?= $row['kelas'] ?></td>
+                    <td><?= $row['nama_guru'] ?></td>
+                    <td class="text-center" style="width: 20%">
+                      <a class="btn btn-success" href="update_kelas.php?kelas=<?= $row['kelas'] ?>">Ubah</a>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>

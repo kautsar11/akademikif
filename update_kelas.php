@@ -1,4 +1,12 @@
-<?php include_once 'views/nav.php'; ?>
+<?php
+include_once 'views/nav.php';
+require_once 'config/config.php';
+include_once 'functions.php';
+
+$kelas = $_GET['kelas'];
+$dataKelas = getRowDataKelas($kelas);
+$listGuru = getRowsGuru();
+?>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -22,17 +30,21 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="" name="formUbahKelas">
+            <form action="<?= htmlspecialchars("controllers/kelas/update_kelas.php?kelas=$kelas") ?>" name="formUbahKelas" method="POST">
               <div class="mb-3">
                 <label for="inputNip" class="form-label">Kelas</label>
-                <input type="number" class="form-control" name="kelas" />
+                <input type="number" class="form-control" name="kelas" value="<?= $dataKelas['kelas'] ?>" disabled />
               </div>
               <div class="mb-3">
                 <label for="inputNama" class="form-label">Nama Wali Kelas</label>
-                <input type="text" class="form-control" name="kelasNamaWakel" />
+                <select name="kelasNamaWakel" id="kelasNamaWakel" class="form-select">
+                  <?php foreach ($listGuru as $guru) : ?>
+                    <option value="<?= $guru['nip'] ?>" <?= ($dataKelas['nip_wakel'] == $guru['nip']) ? "selected" : "" ?>><?= $guru['nama_guru'] ?></option>
+                  <?php endforeach; ?>
+                </select>
               </div>
               <div class="modal-footer">
-                <a class="btn btn-secondary" href="">Kembali</a>
+                <a class="btn btn-secondary" href="kelas.php">Kembali</a>
                 <input class="btn btn-success" name="submitFormUbahKelas" type="submit" value="Ubah" />
               </div>
             </form>

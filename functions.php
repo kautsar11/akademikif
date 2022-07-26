@@ -24,10 +24,35 @@ function getRowDataSiswa($nisn)
     return $result;
 }
 
+function getRowDataKelas($kelas)
+{
+    global $conn;
+    $stmt = $conn->prepare(
+        "SELECT kelas.kelas, kelas.nip_wakel, guru.nama_guru 
+        FROM kelas,guru
+        WHERE guru.nip = kelas.nip_wakel AND kelas.kelas = ?"
+    );
+    $stmt->bind_param("s", $kelas);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    return $result;
+}
+
 function getRowsKelas()
 {
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM kelas");
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    return $result;
+}
+
+function getRowsGuru()
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM guru");
     $stmt->execute();
     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
