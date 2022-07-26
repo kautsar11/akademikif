@@ -23,3 +23,13 @@ function getRowDataSiswa($nisn)
 
     return $result;
 }
+
+function getRowsKelas()
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM kelas");
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    return $result;
+}

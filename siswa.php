@@ -31,27 +31,60 @@
               <!-- tombol cari -->
               <div class="com-sm-12 col-md-6">
                 <div id="dataTables_filter" class="dataTables_filter">
-                  <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="get">
+                    <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  </form>
                 </div>
               </div>
             </div>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th class="text-center">NIS</th>
+                  <th class="text-center">NISN</th>
                   <th class="text-center">Nama</th>
+                  <th class="text-center">Kelas</th>
                   <th class="text-center"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td class="text-center">Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td class="text-center" style="width: 30%">
-                    <a class="btn btn-success" href="">Ubah</a>
-                    <a class="btn btn-danger" href="">Hapus</a>
-                  </td>
-                </tr>
+                <?php
+                require_once 'config/config.php';
+
+                $conn = connect_to_database();
+
+                if (isset($_GET['cari']) && $_GET['cari'] !== "") {
+                  $cari = $_GET["cari"];
+
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM siswa 
+                    WHERE (nisn LIKE concat('%',?,'%')) OR 
+                    (nama_siswa LIKE concat('%',?,'%'))"
+                  );
+                  $stmt->bind_param("ss", $cari, $cari);
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                } else {
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM siswa"
+                  );
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                }
+                $conn->close();
+                foreach ($result as $row) :
+                ?>
+                  <tr>
+                    <td class="text-center"><?= $row['nisn'] ?></td>
+                    <td><?= $row['nama_siswa'] ?></td>
+                    <td class="text-center" style="width: 10%;"><?= $row['nama_kelas'] ?></td>
+                    <td class="text-center" style="width: 30%">
+                      <a class="btn btn-success" href="update_siswa.php?nisn=<?= $row['nisn'] ?>">Ubah</a>
+                      <a class="btn btn-danger" href="controllers/siswa/delete_siswa.php?nisn=<?= $row['nisn'] ?>">Hapus</a>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
@@ -84,14 +117,27 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="" name="formTambahSiswa">
+        <form action="<?= htmlspecialchars("controllers/siswa/insert_siswa.php") ?>" name="formTambahSiswa" method="POST">
           <div class="mb-3">
-            <label for="inputNip" class="form-label">NIS</label>
-            <input type="number" class="form-control" name="siswaNis" />
+            <label for="inputNisn" class="form-label">NISN</label>
+            <input type="number" class="form-control" name="siswaNisn" />
           </div>
           <div class="mb-3">
             <label for="inputNama" class="form-label">Nama</label>
             <input type="text" class="form-control" name="siswaNama" />
+          </div>
+          <div class="mb-3">
+            <label for="inputKelas" class="form-label">Kelas</label>
+            <select name="siswaKelas" id="siswaKelas" class="form-select">
+              <?php
+              require_once 'functions.php';
+
+              $rowsKelas = getRowsKelas();
+              foreach ($rowsKelas as $kelas) :
+              ?>
+                <option value="<?= $kelas['kelas'] ?>"><?= $kelas['kelas'] ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">
