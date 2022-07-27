@@ -29,7 +29,9 @@
               <!-- tombol cari -->
               <div class="com-sm-12 col-md-6 mb-2">
                 <div id="dataTables_filter" class="dataTables_filter">
-                  <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                    <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  </form>
                 </div>
               </div>
             </div>
@@ -55,7 +57,7 @@
                     "SELECT * FROM mata_pelajaran 
                     WHERE (nama_mapel LIKE concat('%',?,'%')) OR (kkm_mapel LIKE concat('%',?,'%'))"
                   );
-                  $stmt->bind_param( $cari, $cari);
+                  $stmt->bind_param("ss", $cari, $cari);
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                   $stmt->close();
@@ -70,13 +72,13 @@
                 $conn->close();
                 foreach ($result as $row) :
                 ?>
-                <tr>
-                  <td><?=$row['nama_mapel']?></td>
-                  <td class="text-center"><?=$row['kkm_mapel']?></td>
-                  <td class="text-center" style="width: 30%">
-                    <a class="btn btn-success" href="update_mata_pelajaran.php?nama_mapel=<?= $row['nama_mapel'] ?>">Ubah</a>
-                  </td>
-                </tr>
+                  <tr>
+                    <td><?= $row['nama_mapel'] ?></td>
+                    <td class="text-center"><?= $row['kkm_mapel'] ?></td>
+                    <td class="text-center" style="width: 30%">
+                      <a class="btn btn-success" href="update_mata_pelajaran.php?nama_mapel=<?= $row['nama_mapel'] ?>">Ubah</a>
+                    </td>
+                  </tr>
                 <?php endforeach; ?>
               </tbody>
             </table>

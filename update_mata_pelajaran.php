@@ -29,10 +29,10 @@ $dataMapel = getRowDataMapel($nama_mapel)
         </div>
         <div class="card-body">
           <div class="table-responsive">
-          <form action="<?= htmlspecialchars("controllers/kelas/update_mata_pelajaran.php?nama_mapel=$nama_mapel") ?>" name="formUbahMapel" method="POST">
+            <form action="<?= htmlspecialchars("controllers/mapel/update_mata_pelajaran.php?nama_mapel=$nama_mapel") ?>" name="formUbahMapel" method="POST">
               <div class="mb-3">
                 <label for="inputNip" class="form-label">Nama Mapel</label>
-                <input type="text" class="form-control" name="namaMapel" value="<?= $nama_mapel?>" readonly />
+                <input type="text" class="form-control" name="namaMapel" value="<?= $nama_mapel ?>" readonly />
               </div>
               <div class="mb-3">
                 <label for="inputNama" class="form-label">KKM</label>
