@@ -67,6 +67,11 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Nilai Siswa</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="backup.php">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Backup</span></a>
+            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider" />

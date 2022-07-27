@@ -33,7 +33,7 @@ $listGuru = getRowsGuru();
             <form action="<?= htmlspecialchars("controllers/kelas/update_kelas.php?kelas=$kelas") ?>" name="formUbahKelas" method="POST">
               <div class="mb-3">
                 <label for="inputNip" class="form-label">Kelas</label>
-                <input type="number" class="form-control" name="kelas" value="<?= $dataKelas['kelas'] ?>" disabled />
+                <input type="number" class="form-control" name="kelas" value="<?= $dataKelas['kelas'] ?>" readonly />
               </div>
               <div class="mb-3">
                 <label for="inputNama" class="form-label">Nama Wali Kelas</label>
