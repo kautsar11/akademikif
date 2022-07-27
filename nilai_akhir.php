@@ -25,25 +25,33 @@
             <div class="row">
               <!-- tombol trigger modal -->
               <div class="com-sm-12 col-md-6">
-                <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#tambahData">
-                  Tambah Data
-                </button>
-              </div>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Kelas
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">1</a>
-                  <a class="dropdown-item" href="#">2</a>
-                  <a class="dropdown-item" href="#">3</a>
+                <div class="row">
+                  <div class="col">
+                    <button type="button" class="btn btn-primary mb-2" data-toggle="modal" data-target="#tambahData">
+                      Tambah Data
+                    </button>
+                  </div>
+                  <div class="col">
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Kelas
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">1</a>
+                        <a class="dropdown-item" href="#">2</a>
+                        <a class="dropdown-item" href="#">3</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               <!-- tombol cari -->
               <div class="com-sm-12 col-md-6">
                 <div id="dataTables_filter" class="dataTables_filter">
-                  <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="get">
+                    <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                  </form>
                 </div>
               </div>
             </div>
@@ -69,6 +77,7 @@
               <tbody>
                 <?php
                 require_once 'config/config.php';
+                include_once 'functions.php';
 
                 $conn = connect_to_database();
 
@@ -76,9 +85,9 @@
                   $cari = $_GET["cari"];
 
                   $stmt = $conn->prepare(
-                    "SELECT * FROM siswa 
-                    WHERE (nisn LIKE concat('%',?,'%')) OR 
-                    (nama_siswa LIKE concat('%',?,'%'))"
+                    "SELECT *
+                    FROM siswa
+                    WHERE (nama_siswa LIKE concat('%',?,'%')) OR (nisn LIKE concat('%',?,'%'))"
                   );
                   $stmt->bind_param("ss", $cari, $cari);
                   $stmt->execute();
@@ -92,31 +101,28 @@
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                   $stmt->close();
                 }
-                $conn->close();
                 foreach ($result as $row) :
                 ?>
-                
-                    <tr>
-                      <td><?= $row['nisn'] ?></td>
-                      <td><?= $row['nama_siswa'] ?></td>
-                    </tr>
-                    <tr>
-                      <td class="text-center"><?= $row['nilai_mapel']?></td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center">70</td>
-                      <td class="text-center" style="width: 30%">
-                        <a class="btn btn-success" href="">Ubah</a>
-                        <a class="btn btn-danger" href="">Hapus</a>
-                      </td>
-                    </tr>
+
+                  <tr>
+                    <td><?= $row['nisn'] ?></td>
+                    <td><?= $row['nama_siswa'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'b.indo')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'b.inggris')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'b.sunda')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'ipa')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'ips')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'matematika')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'pai')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'pjok')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'pkn')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'prakarya')['nilai_mapel'] ?></td>
+                    <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'sbk')['nilai_mapel'] ?></td>
+                    <td class="text-center" style="width: 30%">
+                      <a class="btn btn-success" href="">Ubah</a>
+                      <a class="btn btn-danger" href="">Hapus</a>
+                    </td>
+                  </tr>
                 <?php endforeach; ?>
               </tbody>
             </table>

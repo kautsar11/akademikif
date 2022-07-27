@@ -69,3 +69,14 @@ function getRowDataMapel($nama_mapel)
 
     return $result;
 }
+
+function getRowNilaiSiswa($nisn, $nama_mapel)
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM nilai_akhir WHERE nisn = ? AND nama_mapel = ?");
+    $stmt->bind_param("ss", $nisn, $nama_mapel);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    return $result;
+}
