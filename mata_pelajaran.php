@@ -29,7 +29,7 @@
               <!-- tombol cari -->
               <div class="com-sm-12 col-md-6 mb-2">
                 <div id="dataTables_filter" class="dataTables_filter">
-                  <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>">
+                  <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="get">
                     <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
                   </form>
                 </div>
