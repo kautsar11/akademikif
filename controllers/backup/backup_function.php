@@ -3,7 +3,6 @@ error_reporting(0);
 
 function backDb($host, $user, $pass, $dbname, $tables = '*')
 {
-	// $conn = new mysqli($host, $user, $pass, $dbname);
 	$conn = mysqli_connect($host, $user, $pass, $dbname);
 	if ($conn->connect_error) {
 		die("Connection failed: " . $conn->connect_error);
