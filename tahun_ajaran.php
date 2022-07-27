@@ -33,7 +33,9 @@
               <!-- tombol cari -->
               <div class="com-sm-12 col-md-6">
                 <div id="dataTables_filter" class="dataTables_filter">
+                <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="get">
                   <input type="search" name="cari" class="form-control form-control-sm" placeholder="Cari..." />
+                </form>
                 </div>
               </div>
             </div>
@@ -46,13 +48,41 @@
                 </tr>
               </thead>
               <tbody>
+              <?php
+                require_once 'config/config.php';
+
+                $conn = connect_to_database();
+
+                if (isset($_GET['cari']) && $_GET['cari'] !== "") {
+                  $cari = $_GET["cari"];
+
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM tahun_ajar 
+                    WHERE (id_tahun_ajar LIKE concat('%',?,'%')) OR (tahun_ajar LIKE concat('%',?,'%'))"
+                  );
+                  $stmt->bind_param("ss", $cari, $cari);
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                } else {
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM tahun_ajar"
+                  );
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                }
+                $conn->close();
+                foreach ($result as $row) :
+                ?>
                 <tr>
-                  <td class="text-center">Tiger Nixon</td>
-                  <td class="text-center">System Architect</td>
+                  <td class="text-center"><?=$row['id_tahun_ajar']?></td>
+                  <td class="text-center"><?=$row['tahun_ajar']?></td>
                   <td class="text-center" style="width: 30%">
-                    <a class="btn btn-danger" href="">Hapus</a>
+                    <a class="btn btn-danger" href="controllers/tahun/delete_tahun_ajar.php?id_tahun_ajar=<?= $row['id_tahun_ajar'] ?>">Hapus</a>
                   </td>
                 </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>
@@ -71,5 +101,35 @@
 <a class="scroll-to-top rounded" href="#page-top">
   <i class="fas fa-angle-up"></i>
 </a>
+
+<!-- modal tambah data -->
+<div class="modal fade" id="tambahData" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Tambah Data Tahun Ajaran
+        </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="<?= htmlspecialchars("controllers/tahun/insert_tahun_ajaran.php") ?>" name="formTambahTahunAjar" method="POST">
+          <div class="mb-3">
+            <label for="inputTahunAjar" class="form-label">Tahun Ajaran</label>
+            <input type="text" class="form-control" name="tahunAjar" />
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">
+              Batal
+            </button>
+            <input class="btn btn-primary" name="submitFormTambahTahunAjar" type="submit" value="Tambah" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php include_once 'views/footer.php'; ?>
