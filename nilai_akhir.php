@@ -29,6 +29,16 @@
                   Tambah Data
                 </button>
               </div>
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Kelas
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">1</a>
+                  <a class="dropdown-item" href="#">2</a>
+                  <a class="dropdown-item" href="#">3</a>
+                </div>
+              </div>
 
               <!-- tombol cari -->
               <div class="com-sm-12 col-md-6">
@@ -57,25 +67,57 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center">70</td>
-                  <td class="text-center" style="width: 30%">
-                    <a class="btn btn-success" href="">Ubah</a>
-                    <a class="btn btn-danger" href="">Hapus</a>
-                  </td>
-                </tr>
+                <?php
+                require_once 'config/config.php';
+
+                $conn = connect_to_database();
+
+                if (isset($_GET['cari']) && $_GET['cari'] !== "") {
+                  $cari = $_GET["cari"];
+
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM siswa 
+                    WHERE (nisn LIKE concat('%',?,'%')) OR 
+                    (nama_siswa LIKE concat('%',?,'%'))"
+                  );
+                  $stmt->bind_param("ss", $cari, $cari);
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                } else {
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM siswa"
+                  );
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                }
+                $conn->close();
+                foreach ($result as $row) :
+                ?>
+                
+                    <tr>
+                      <td><?= $row['nisn'] ?></td>
+                      <td><?= $row['nama_siswa'] ?></td>
+                    </tr>
+                    <tr>
+                      <td class="text-center"><?= $row['nilai_mapel']?></td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center">70</td>
+                      <td class="text-center" style="width: 30%">
+                        <a class="btn btn-success" href="">Ubah</a>
+                        <a class="btn btn-danger" href="">Hapus</a>
+                      </td>
+                    </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>

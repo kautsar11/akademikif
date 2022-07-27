@@ -58,3 +58,14 @@ function getRowsGuru()
 
     return $result;
 }
+
+function getRowDataMapel($nama_mapel)
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM mata_pelajaran WHERE nama_mapel = ?");
+    $stmt->bind_param("s", $nama_mapel);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    return $result;
+}

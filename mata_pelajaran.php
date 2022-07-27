@@ -42,13 +42,42 @@
                 </tr>
               </thead>
               <tbody>
+              <tbody>
+                <?php
+                require_once 'config/config.php';
+
+                $conn = connect_to_database();
+
+                if (isset($_GET['cari']) && $_GET['cari'] !== "") {
+                  $cari = $_GET["cari"];
+
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM mata_pelajaran 
+                    WHERE (nama_mapel LIKE concat('%',?,'%')) OR (kkm_mapel LIKE concat('%',?,'%'))"
+                  );
+                  $stmt->bind_param( $cari, $cari);
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                } else {
+                  $stmt = $conn->prepare(
+                    "SELECT * FROM mata_pelajaran"
+                  );
+                  $stmt->execute();
+                  $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+                  $stmt->close();
+                }
+                $conn->close();
+                foreach ($result as $row) :
+                ?>
                 <tr>
-                  <td>Tiger Nixon</td>
-                  <td class="text-center" style="width: 10%">80</td>
+                  <td><?=$row['nama_mapel']?></td>
+                  <td class="text-center"><?=$row['kkm_mapel']?></td>
                   <td class="text-center" style="width: 30%">
-                    <a class="btn btn-success" href="">Ubah</a>
+                    <a class="btn btn-success" href="update_mata_pelajaran.php?nama_mapel=<?= $row['nama_mapel'] ?>">Ubah</a>
                   </td>
                 </tr>
+                <?php endforeach; ?>
               </tbody>
             </table>
           </div>

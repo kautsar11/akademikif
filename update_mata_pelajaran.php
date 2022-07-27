@@ -1,4 +1,11 @@
-<?php include_once 'views/nav.php'; ?>
+<?php
+include_once 'views/nav.php';
+require_once 'config/config.php';
+include_once 'functions.php';
+
+$nama_mapel = $_GET['nama_mapel'];
+$dataMapel = getRowDataMapel($nama_mapel)
+?>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -22,17 +29,17 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <form action="" name="formUbahMapel">
+          <form action="<?= htmlspecialchars("controllers/kelas/update_mata_pelajaran.php?nama_mapel=$nama_mapel") ?>" name="formUbahMapel" method="POST">
               <div class="mb-3">
                 <label for="inputNip" class="form-label">Nama Mapel</label>
-                <input type="number" class="form-control" name="namaMapel" />
+                <input type="text" class="form-control" name="namaMapel" value="<?= $nama_mapel?>" readonly />
               </div>
               <div class="mb-3">
                 <label for="inputNama" class="form-label">KKM</label>
-                <input type="text" class="form-control" name="kkm" />
+                <input type="text" class="form-control" name="kkm" value="<?= $dataMapel['kkm_mapel'] ?>" />
               </div>
               <div class="modal-footer">
-                <a class="btn btn-secondary" href="">Kembali</a>
+                <a class="btn btn-secondary" href="mata_pelajaran.php">Kembali</a>
                 <input class="btn btn-success" name="submitFormUbahMapel" type="submit" value="Ubah" />
               </div>
             </form>

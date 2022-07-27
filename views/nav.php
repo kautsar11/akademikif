@@ -63,7 +63,7 @@
                     <span>Mata Pelajaran</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="siswa.php">
+                <a class="nav-link" href="nilai_akhir.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Nilai Siswa</span></a>
             </li>
