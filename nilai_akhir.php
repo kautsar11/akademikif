@@ -156,14 +156,67 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="" name="formTambahNilaiAkhir">
+        <form action="<?= htmlspecialchars("controllers/nilai/insert_nilai.php") ?>" name="formTambahNilaiAkhir" method="POST">
           <div class="mb-3">
-            <label for="inputNip" class="form-label">NIP</label>
-            <input type="number" class="form-control" name="guruNip" />
+            <label for="inputNip" class="form-label">NISN</label>
+            <select name="nisn" id="nisn" class="form-select">
+              <?php foreach (getRowsSiswa() as $row) : ?>
+                <option value="<?= $row['nisn'] ?>"><?= $row['nisn'] . " - " . $row['nama_siswa'] ?></option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="tahunAjar" class="form-label">Tahun Ajar</label>
+            <select name="tahunAjar" id="tahunAjar" class="form-select">
+              <?php foreach (getRowsTahunAjar() as $row) : ?>
+                <option value="<?= $row['id_tahun_ajar'] ?>"><?= $row['tahun_ajar'] ?></option>
+              <?php endforeach; ?>
+            </select>
           </div>
           <div class="mb-3">
-            <label for="inputNama" class="form-label">Nama</label>
-            <input type="text" class="form-control" name="guruNama" />
+            <div class="row text-center">
+              <h6>NILAI SISWA</h6>
+              <hr>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="bIndo" class="form-label">B.INDO</label>
+                <input type="number" class="form-control" name="bIndo" />
+
+                <label for="bInggris" class="form-label">B.INGGRIS</label>
+                <input type="number" class="form-control" name="bInggris" />
+
+                <label for="bSunda" class="form-label">B.SUNDA</label>
+                <input type="number" class="form-control" name="bSunda" />
+
+                <label for="ipa" class="form-label">IPA</label>
+                <input type="number" class="form-control" name="ipa" />
+              </div>
+              <div class="col">
+                <label for="ips" class="form-label">IPS</label>
+                <input type="number" class="form-control" name="ips" />
+
+                <label for="matematika" class="form-label">MATEMATIKA</label>
+                <input type="number" class="form-control" name="matematika" />
+
+                <label for="pai" class="form-label">PAI</label>
+                <input type="number" class="form-control" name="pai" />
+
+                <label for="pjok" class="form-label">PJOK</label>
+                <input type="number" class="form-control" name="pjok" />
+              </div>
+              <div class="col">
+                <label for="pkn" class="form-label">PKN</label>
+                <input type="number" class="form-control" name="pkn" />
+
+                <label for="prakarya" class="form-label">PRAKARYA</label>
+                <input type="number" class="form-control" name="prakarya" />
+
+                <label for="sbk" class="form-label">SBK</label>
+                <input type="number" class="form-control" name="sbk" />
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">

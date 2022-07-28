@@ -2,6 +2,7 @@
 
 $conn = connect_to_database();
 
+// mendapatkan data guru tertentu
 function getRowDataGuru($nip)
 {
     global $conn;
@@ -13,6 +14,7 @@ function getRowDataGuru($nip)
     return $result;
 }
 
+// mendapatkan data siswa tertentu
 function getRowDataSiswa($nisn)
 {
     global $conn;
@@ -24,6 +26,7 @@ function getRowDataSiswa($nisn)
     return $result;
 }
 
+// mendapatkan data kelas tertentu
 function getRowDataKelas($kelas)
 {
     global $conn;
@@ -39,6 +42,7 @@ function getRowDataKelas($kelas)
     return $result;
 }
 
+// mendapatkan semua data kelas
 function getRowsKelas()
 {
     global $conn;
@@ -49,6 +53,7 @@ function getRowsKelas()
     return $result;
 }
 
+// mendapatkan semua data guru
 function getRowsGuru()
 {
     global $conn;
@@ -59,6 +64,29 @@ function getRowsGuru()
     return $result;
 }
 
+// mendapatkan semua data siswa
+function getRowsSiswa()
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM siswa");
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    return $result;
+}
+
+// mendapatkan semua data tahun ajar
+function getRowsTahunAjar()
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM tahun_ajar");
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    return $result;
+}
+
+// mendapatkan data mapel tertentu
 function getRowDataMapel($nama_mapel)
 {
     global $conn;
@@ -70,6 +98,7 @@ function getRowDataMapel($nama_mapel)
     return $result;
 }
 
+// mendapatkan data nilai dari siswa tertentu
 function getRowNilaiSiswa($nisn, $nama_mapel)
 {
     global $conn;
