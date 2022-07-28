@@ -3,7 +3,7 @@ include_once '../../config/config.php';
 
 if (isset($_POST['submitFormTambahGuru'])) {
     $nip = $_POST['guruNip'];
-    $nama = $_POST['guruNama'];
+    $nama = strtoupper($_POST['guruNama']);
 
     $conn = connect_to_database();
 

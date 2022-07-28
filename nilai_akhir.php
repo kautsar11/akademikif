@@ -83,20 +83,23 @@
 
                 if (isset($_GET['cari']) && $_GET['cari'] !== "") {
                   $cari = $_GET["cari"];
-
+                  $mapel = "ipa";
                   $stmt = $conn->prepare(
                     "SELECT *
-                    FROM siswa
-                    WHERE (nama_siswa LIKE concat('%',?,'%')) OR (nisn LIKE concat('%',?,'%'))"
+                    FROM nilai_akhir
+                    WHERE (nisn LIKE concat('%',?,'%')) AND nama_mapel = ?"
                   );
-                  $stmt->bind_param("ss", $cari, $cari);
+                  $stmt->bind_param("ss", $cari, $mapel);
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                   $stmt->close();
                 } else {
+                  $mapel = "ipa";
                   $stmt = $conn->prepare(
-                    "SELECT * FROM siswa"
+                    "SELECT * FROM nilai_akhir
+                    WHERE nama_mapel = ?"
                   );
+                  $stmt->bind_param("s", $mapel);
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                   $stmt->close();
@@ -106,7 +109,7 @@
 
                   <tr>
                     <td><?= $row['nisn'] ?></td>
-                    <td><?= $row['nama_siswa'] ?></td>
+                    <td><?= getRowDataSiswa($row['nisn'])['nama_siswa'] ?></td>
                     <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'b.indo')['nilai_mapel'] ?></td>
                     <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'b.inggris')['nilai_mapel'] ?></td>
                     <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'b.sunda')['nilai_mapel'] ?></td>
@@ -119,8 +122,8 @@
                     <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'prakarya')['nilai_mapel'] ?></td>
                     <td class="text-center"><?= getRowNilaiSiswa($row['nisn'], 'sbk')['nilai_mapel'] ?></td>
                     <td class="text-center" style="width: 30%">
-                      <a class="btn btn-success" href="">Ubah</a>
-                      <a class="btn btn-danger" href="">Hapus</a>
+                      <a class="btn btn-success" href="update_nilai_akhir.php?nisn=<?= $row['nisn'] ?>">Ubah</a>
+                      <a class="btn btn-danger" href="controllers/nilai/delete_nilai.php?nisn=<?= $row['nisn'] ?>">Hapus</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>
@@ -158,7 +161,7 @@
       <div class="modal-body">
         <form action="<?= htmlspecialchars("controllers/nilai/insert_nilai.php") ?>" name="formTambahNilaiAkhir" method="POST">
           <div class="mb-3">
-            <label for="inputNip" class="form-label">NISN</label>
+            <label for="nisn" class="form-label">NISN</label>
             <select name="nisn" id="nisn" class="form-select">
               <?php foreach (getRowsSiswa() as $row) : ?>
                 <option value="<?= $row['nisn'] ?>"><?= $row['nisn'] . " - " . $row['nama_siswa'] ?></option>

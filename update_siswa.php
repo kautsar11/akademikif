@@ -71,4 +71,4 @@ $dataSiswa = getRowDataSiswa($nisn);
   <i class="fas fa-angle-up"></i>
 </a>
 
-<?php include_once 'views/footer.php.php'; ?>
+<?php include_once 'views/footer.php'; ?>

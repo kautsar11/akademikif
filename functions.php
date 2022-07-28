@@ -98,7 +98,7 @@ function getRowDataMapel($nama_mapel)
     return $result;
 }
 
-// mendapatkan data nilai dari siswa tertentu
+// mendapatkan data nilai mapel dari siswa tertentu
 function getRowNilaiSiswa($nisn, $nama_mapel)
 {
     global $conn;
