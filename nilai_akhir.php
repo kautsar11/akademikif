@@ -1,4 +1,9 @@
-<?php include_once 'views/nav.php'; ?>
+<?php
+include_once 'views/nav.php';
+require_once 'config/config.php';
+include_once 'functions.php';
+
+?>
 
 <!-- Content Wrapper -->
 <div id="content-wrapper" class="d-flex flex-column">
@@ -33,13 +38,14 @@
                   </div>
                   <div class="col">
                     <div class="dropdown">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Kelas
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">1</a>
-                        <a class="dropdown-item" href="#">2</a>
-                        <a class="dropdown-item" href="#">3</a>
+                        <a class="dropdown-item" href="nilai_akhir.php">Semua Kelas</a>
+                        <?php foreach (getRowsKelas() as $kelas) : ?>
+                          <a class="dropdown-item" href="nilai_akhir.php?kelas=<?= $kelas['kelas'] ?>"><?= $kelas['kelas'] ?></a>
+                        <?php endforeach; ?>
                       </div>
                     </div>
                   </div>
@@ -76,9 +82,6 @@
               </thead>
               <tbody>
                 <?php
-                require_once 'config/config.php';
-                include_once 'functions.php';
-
                 $conn = connect_to_database();
 
                 if (isset($_GET['cari']) && $_GET['cari'] !== "") {
@@ -185,39 +188,39 @@
             <div class="row">
               <div class="col">
                 <label for="bIndo" class="form-label">B.INDO</label>
-                <input type="number" class="form-control" name="bIndo" />
+                <input type="number" class="form-control" name="bIndo" value="0" />
 
                 <label for="bInggris" class="form-label">B.INGGRIS</label>
-                <input type="number" class="form-control" name="bInggris" />
+                <input type="number" class="form-control" name="bInggris" value="0" />
 
                 <label for="bSunda" class="form-label">B.SUNDA</label>
-                <input type="number" class="form-control" name="bSunda" />
+                <input type="number" class="form-control" name="bSunda" value="0" />
 
                 <label for="ipa" class="form-label">IPA</label>
-                <input type="number" class="form-control" name="ipa" />
+                <input type="number" class="form-control" name="ipa" value="0" />
               </div>
               <div class="col">
                 <label for="ips" class="form-label">IPS</label>
-                <input type="number" class="form-control" name="ips" />
+                <input type="number" class="form-control" name="ips" value="0" />
 
                 <label for="matematika" class="form-label">MATEMATIKA</label>
-                <input type="number" class="form-control" name="matematika" />
+                <input type="number" class="form-control" name="matematika" value="0" />
 
                 <label for="pai" class="form-label">PAI</label>
-                <input type="number" class="form-control" name="pai" />
+                <input type="number" class="form-control" name="pai" value="0" />
 
                 <label for="pjok" class="form-label">PJOK</label>
-                <input type="number" class="form-control" name="pjok" />
+                <input type="number" class="form-control" name="pjok" value="0" />
               </div>
               <div class="col">
                 <label for="pkn" class="form-label">PKN</label>
-                <input type="number" class="form-control" name="pkn" />
+                <input type="number" class="form-control" name="pkn" value="0" />
 
                 <label for="prakarya" class="form-label">PRAKARYA</label>
-                <input type="number" class="form-control" name="prakarya" />
+                <input type="number" class="form-control" name="prakarya" value="0" />
 
                 <label for="sbk" class="form-label">SBK</label>
-                <input type="number" class="form-control" name="sbk" />
+                <input type="number" class="form-control" name="sbk" value="0" />
               </div>
             </div>
           </div>

@@ -39,7 +39,7 @@ $listGuru = getRowsGuru();
                 <label for="inputNama" class="form-label">Nama Wali Kelas</label>
                 <select name="kelasNamaWakel" id="kelasNamaWakel" class="form-select">
                   <?php foreach ($listGuru as $guru) : ?>
-                    <option value="<?= $guru['nip'] ?>" <?= ($dataKelas['nip_wakel'] == $guru['nip']) ? "selected" : "" ?>><?= $guru['nama_guru'] ?></option>
+                    <option value="<?= $guru['nip'] ?>" <?= ($dataKelas['nip_wakel'] == $guru['nip']) ? "selected" : "" ?>><?= $guru['nip'] . " - " . $guru['nama_guru'] ?></option>
                   <?php endforeach; ?>
                 </select>
               </div>
