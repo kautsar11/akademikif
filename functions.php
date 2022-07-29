@@ -86,6 +86,17 @@ function getRowsTahunAjar()
     return $result;
 }
 
+// mendapatkan semua data mata pelajaran
+function getRowsMapel()
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM mata_pelajaran");
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+    return $result;
+}
+
 // mendapatkan data mapel tertentu
 function getRowDataMapel($nama_mapel)
 {
@@ -104,6 +115,18 @@ function getRowNilaiSiswa($nisn, $nama_mapel)
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM nilai_akhir WHERE nisn = ? AND nama_mapel = ?");
     $stmt->bind_param("ss", $nisn, $nama_mapel);
+    $stmt->execute();
+    $result = $stmt->get_result()->fetch_assoc();
+
+    return $result;
+}
+
+// mendapatkan data tahun ajar tertentu
+function getRowTahunAjar($id)
+{
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM tahun_ajar WHERE id_tahun_ajar = ?");
+    $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
 

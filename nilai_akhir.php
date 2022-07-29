@@ -78,6 +78,7 @@ include_once 'functions.php';
                   <th class="text-center">PRAKARYA</th>
                   <th class="text-center">SBK</th>
                   <th class="text-center"></th>
+                  <th class="text-center"></th>
                 </tr>
               </thead>
               <tbody>
@@ -127,6 +128,9 @@ include_once 'functions.php';
                     <td class="text-center" style="width: 30%">
                       <a class="btn btn-success" href="update_nilai_akhir.php?nisn=<?= $row['nisn'] ?>">Ubah</a>
                       <a class="btn btn-danger" href="controllers/nilai/delete_nilai.php?nisn=<?= $row['nisn'] ?>">Hapus</a>
+                    </td>
+                    <td class="text-center">
+                      <a class="btn btn-success" href="laporan.php?nisn=<?= $row['nisn'] ?>">Cetak Laporan</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>
