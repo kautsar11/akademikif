@@ -6,7 +6,7 @@ require_once 'fpdf/fpdf.php';
 $nisn = $_GET['nisn'];
 $dataSiswa = getRowDataSiswa($nisn);
 
-$pdf = new FPDF(orientation: 'P', unit: 'mm', size: 'A4');
+$pdf = new FPDF('P', 'mm', 'A4');
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 14);
 $pdf->Cell(80);
@@ -44,25 +44,10 @@ $pdf->Ln();
 foreach (getRowsMapel() as $mapel) {
     $pdf->SetFont('', '');
     $pdf->Cell(100, 8, $mapel['nama_mapel'], "LTRB", 0, 'L');
-    $pdf->Cell(20, 8, $mapel['kkm_mapel'], "LTRB", align: "C");
-    $pdf->Cell(20, 8, getRowNilaiSiswa($nisn, $mapel['nama_mapel'])['nilai_mapel'], "LTRB", align: "C");
-    $pdf->Cell(40, 8, (getRowNilaiSiswa($nisn, $mapel['nama_mapel'])['nilai_mapel'] >= $mapel['kkm_mapel']) ? "LULUS" : "TIDAK LULUS", "LTRB", align: "C");
+    $pdf->Cell(20, 8, $mapel['kkm_mapel'], "LTRB", 0, "C");
+    $pdf->Cell(20, 8, getRowNilaiSiswa($nisn, $mapel['nama_mapel'])['nilai_mapel'], "LTRB", 0, "C");
+    $pdf->Cell(40, 8, (getRowNilaiSiswa($nisn, $mapel['nama_mapel'])['nilai_mapel'] >= $mapel['kkm_mapel']) ? "LULUS" : "TIDAK LULUS", "LTRB", 0, "C");
     $pdf->Ln();
 }
-
-// $pdf->SetFont('', '');
-// $pdf->Cell(100, 8, "The ability to interpret information and", "LR", 0, 'L');
-// $pdf->SetFont('', '');
-// $pdf->Cell(20, 8, "6", "LR", align: "C");
-// $pdf->Cell(20, 8, "Effective", "LR", align: "C");
-// $pdf->Cell(40, 8, "Effective", "LR", align: "C");
-// $pdf->Ln();
-
-// $pdf->SetFont('', '');
-// $pdf->Cell(100, 8, "drawing accurate conclusions", "LBR", 0, 'L');
-// $pdf->Cell(20, 8, "", "LBR", align: "C");
-// $pdf->Cell(20, 8, "", "LBR", align: "C");
-// $pdf->Cell(40, 8, "", "LBR", align: "C");
-// $pdf->Ln();
 
 $pdf->Output();
