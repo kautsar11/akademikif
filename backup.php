@@ -1,4 +1,5 @@
 <?php
+require_once 'config/config.php';
 include_once 'views/nav.php';
 ?>
 
@@ -24,19 +25,19 @@ include_once 'views/nav.php';
                     <form action="controllers/backup/database_backup.php" method="post">
                         <div class="form-group">
                             <label class="control-label mb-10">Host</label>
-                            <input type="password" class="form-control" name="server" id="server" required="" autocomplete="on" value="localhost" readonly>
+                            <input type="password" class="form-control" name="server" id="server" required="" autocomplete="on" value="<?= HOST ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label class="control-label mb-10">Database Username</label>
-                            <input type="password" class="form-control" name="username" id="username" required="" autocomplete="on" value="root" readonly>
+                            <input type="password" class="form-control" name="username" id="username" required="" autocomplete="on" value="<?= USERNAME ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label class="pull-left control-label mb-10">Database Password</label>
-                            <input type="password" class="form-control" name="password" id="password" value="" readonly>
+                            <input type="password" class="form-control" name="password" id="password" value="<?= PASS ?>" readonly>
                         </div>
                         <div class="form-group">
                             <label class="pull-left control-label mb-10">Database Name</label>
-                            <input type="password" class="form-control" name="dbname" id="dbname" required="" autocomplete="on" value="akademik" readonly>
+                            <input type="password" class="form-control" name="dbname" id="dbname" required="" autocomplete="on" value="<?= DBNAME ?>" readonly>
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" name="backupnow" class="btn btn-info btn-rounded">Backup Database</button>
