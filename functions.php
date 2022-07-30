@@ -46,7 +46,7 @@ function getRowDataKelas($kelas)
 function getRowsKelas()
 {
     global $conn;
-    $stmt = $conn->prepare("SELECT * FROM kelas");
+    $stmt = $conn->prepare("SELECT * FROM kelas ORDER BY kelas ASC");
     $stmt->execute();
     $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
@@ -113,7 +113,7 @@ function getRowDataMapel($nama_mapel)
 function getRowNilaiSiswa($nisn, $nama_mapel)
 {
     global $conn;
-    $stmt = $conn->prepare("SELECT * FROM nilai_akhir WHERE nisn = ? AND nama_mapel = ?");
+    $stmt = $conn->prepare("SELECT * FROM view_nilai_akhir WHERE nisn = ? AND nama_mapel = ? order by nama_siswa asc");
     $stmt->bind_param("ss", $nisn, $nama_mapel);
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();

@@ -56,7 +56,7 @@
 
                   $stmt = $conn->prepare(
                     "SELECT * FROM guru 
-                    WHERE (nip LIKE concat('%',?,'%')) OR (nama_guru LIKE concat('%',?,'%'))"
+                    WHERE (nip LIKE concat('%',?,'%')) OR (nama_guru LIKE concat('%',?,'%')) order by nama_guru asc"
                   );
                   $stmt->bind_param("ss", $cari, $cari);
                   $stmt->execute();
@@ -64,7 +64,7 @@
                   $stmt->close();
                 } else {
                   $stmt = $conn->prepare(
-                    "SELECT * FROM guru"
+                    "SELECT * FROM guru order by nama_guru asc"
                   );
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);

@@ -53,7 +53,7 @@
                   $stmt = $conn->prepare(
                     "SELECT kelas.kelas, guru.nama_guru 
                     FROM kelas,guru
-                    WHERE guru.nip = kelas.nip_wakel AND guru.nama_guru LIKE concat('%',?,'%')"
+                    WHERE guru.nip = kelas.nip_wakel AND guru.nama_guru LIKE concat('%',?,'%') ORDER BY kelas.kelas ASC"
                   );
                   $stmt->bind_param("s", $cari);
                   $stmt->execute();
@@ -63,7 +63,7 @@
                   $stmt = $conn->prepare(
                     "SELECT kelas.kelas, guru.nama_guru 
                     FROM kelas,guru
-                    WHERE guru.nip = kelas.nip_wakel"
+                    WHERE guru.nip = kelas.nip_wakel ORDER BY kelas.kelas ASC"
                   );
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);

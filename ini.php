@@ -84,26 +84,26 @@ include_once 'functions.php';
               <tbody>
                 <?php
                 $conn = connect_to_database();
-
+                $kelas = $_GET['kelas'];
                 if (isset($_GET['cari']) && $_GET['cari'] !== "") {
                   $cari = $_GET["cari"];
                   $mapel = "ipa";
                   $stmt = $conn->prepare(
                     "SELECT *
-                    FROM nilai_akhir
-                    WHERE (nisn LIKE concat('%',?,'%')) AND nama_mapel = ?"
+                    FROM view_nilai_akhir
+                    WHERE (nisn LIKE concat('%',?,'%')) AND nama_mapel = ? and kelas = ? order by nama_siswa asc"
                   );
-                  $stmt->bind_param("ss", $cari, $mapel);
+                  $stmt->bind_param("sss", $cari, $mapel, $kelas);
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                   $stmt->close();
                 } else {
                   $mapel = "ipa";
                   $stmt = $conn->prepare(
-                    "SELECT * FROM nilai_akhir
-                    WHERE nama_mapel = ?"
+                    "SELECT * FROM view_nilai_akhir
+                    WHERE nama_mapel = ? and kelas = ? order by nama_siswa asc"
                   );
-                  $stmt->bind_param("s", $mapel);
+                  $stmt->bind_param("ss", $mapel, $kelas);
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
                   $stmt->close();
