@@ -58,7 +58,7 @@
                   $stmt = $conn->prepare(
                     "SELECT * FROM siswa 
                     WHERE (nisn LIKE concat('%',?,'%')) OR 
-                    (nama_siswa LIKE concat('%',?,'%')) GROUP BY (nama_kelas)"
+                    (nama_siswa LIKE concat('%',?,'%'))  order by nama_kelas"
                   );
                   $stmt->bind_param("ss", $cari, $cari);
                   $stmt->execute();
@@ -66,7 +66,7 @@
                   $stmt->close();
                 } else {
                   $stmt = $conn->prepare(
-                    "SELECT * FROM siswa GROUP BY (nama_kelas)"
+                    "SELECT * FROM siswa order by nama_kelas"
                   );
                   $stmt->execute();
                   $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
